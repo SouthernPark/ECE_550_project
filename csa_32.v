@@ -22,7 +22,7 @@ module csa_32(a, b, in, sum, overflow);
 	//Thirdly, calculate teh high 16 bits with carry_in = 1
 	wire high_16_overflow_1;
 	wire [31:16] high_16_sum_1_carry;
-	rca_16 high_16_1(a[31:16], b[31:16], 1, high_16_sum_1_carry[31:16], high_16_carry_out_1, high_16_0verflow_1);
+	rca_16 high_16_1(a[31:16], b[31:16], 1, high_16_sum_1_carry[31:16], high_16_carry_out_1, high_16_overflow_1);
 	
 	//forthly: assign high 16 bit with mux
 	assign sum[31:16] = low_16_carry_out ? high_16_sum_1_carry[31:16] : high_16_sum_0_carry[31:16];
