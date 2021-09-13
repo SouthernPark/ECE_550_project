@@ -24,10 +24,10 @@ module alu(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	assign which_B = ctrl_ALUopcode[0] ? not_B : data_operandB;
 	
 	//carry in should be the least digit of ctrl_ALUopcode
-	wire carry_in;
-	assign carry_in = ctrl_ALUopcode[0];
+	//wire carry_in;
+	//assign carry_in = ctrl_ALUopcode[0];
 	
 	
-	csa_32 alu(data_operandA, which_B, carry_in, data_result, overflow);
+	csa_32 alu(data_operandA, which_B, ctrl_ALUopcode[0], data_result, overflow);
 	
 endmodule

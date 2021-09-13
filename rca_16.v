@@ -17,19 +17,20 @@ module rca_16(a, b, in, sum, out, overflow);
 	
 	//use for loop to connect the full adders
 	//we need 16 full adders
+	wire[16:0] res;
 	genvar i;
 	generate	
 		for(i=0;i<16;i=i+1) begin: rca
-				fa fulll_adder(a[i], b[i], carry[i], sum[i], carry[i+1]);
+				fa full_adder(a[i], b[i], carry[i], res[i], carry[i+1]);
 		end
 	endgenerate
 	//the last carry is the output carry
 	assign out = carry[16];
-	
+	assign sum[15:0] = res[15:0];
 	//wire[16] is the CO of the last digit
 	//wire[15] is the CI of the last digit
 	//if CI != CO, then there is an overflow
 	//we can use xor CI and CO to classify overflow
-	xor(overflow, carry[15], carry[16]);
+	xor over(overflow, carry[15], carry[16]);
 	
 endmodule

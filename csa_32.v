@@ -10,7 +10,7 @@ module csa_32(a, b, in, sum, overflow);
 	
 	//firstly: calculate the lower 16 bits using RCA
 	wire low_16_carry_out;
-	wire low_16_overflow;
+	//wire low_16_overflow;
 	rca_16 low_16(a[15:0], b[15:0], in, sum[15:0], low_16_carry_out, low_16_overflow);
 	
 	//secondly: calculate the high 16 bits with carry_in = 0
