@@ -10,26 +10,28 @@ module rca_16(a, b, in, sum, out, overflow);
 	//this register will store the carry out in the previous full adder
 	//at the beginning it is set as 0
 	
-	//we need 17 wires for the cary in and car out
-	wire [16:0] carry;
-	//carry[0] is the initial carry which depends on the input carry in
-	assign carry[0]=in;
+	wire low_8_carry_out;
+	wire low_8_overflow;
+	rca_8 low_8(a[7:0], b[7:0], in, sum[7:0], low_8_carry_out, low_8_overflow);
+	//secondly: calculate the high 8 bits with carry_in = 0
+	wire [15:8] high_8_sum_0_carry;
+	wire high_8_carry_out_0;
+	wire high_8_overflow_0;
+	rca_8 high_8_0(a[15:8], b[15:8], 1'b0, high_8_sum_0_carry[15:8], high_8_carry_out_0, high_8_overflow_0);
 	
-	//use for loop to connect the full adders
-	//we need 16 full adders
-	genvar i;
-	generate	
-		for(i=0;i<16;i=i+1) begin: rca
-				fa fulll_adder(a[i], b[i], carry[i], sum[i], carry[i+1]);
-		end
-	endgenerate
-	//the last carry is the output carry
-	assign out = carry[16];
+	//Thirdly, calculate teh high 8 bits with carry_in = 1
+	wire high_8_overflow_1;
+	wire high_8_carry_out_1;
+	wire [15:8] high_8_sum_1_carry;
+	rca_8 high_8_1(a[15:8], b[15:8], 1'b1, high_8_sum_1_carry[15:8], high_8_carry_out_1, high_8_overflow_1);
 	
-	//wire[16] is the CO of the last digit
-	//wire[15] is the CI of the last digit
-	//if CI != CO, then there is an overflow
-	//we can use xor CI and CO to classify overflow
-	xor(overflow, carry[15], carry[16]);
+	
+	//forthly: assign high 8 bit with mux
+	assign sum[15:8] = low_8_carry_out ? high_8_sum_1_carry[15:8] : high_8_sum_0_carry[15:8];
+	
+	assign out = low_8_carry_out ? high_8_carry_out_1 : high_8_carry_out_0;
+	
+	//finally: assign overflow with mux
+	assign overflow = low_8_carry_out ? high_8_overflow_1 : high_8_overflow_0;
 	
 endmodule
