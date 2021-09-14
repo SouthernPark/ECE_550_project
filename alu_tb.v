@@ -157,6 +157,7 @@ module alu_tb();
 
             assign data_operandA = 32'h00000000;
             assign data_operandB = 32'h00000000;
+				assign data_expected = 32'h00000000;
 
             @(negedge clock);
             if(data_result !== 32'h00000000) begin
@@ -178,6 +179,75 @@ module alu_tb();
                     errors = errors + 1;
                 end
             end
+				// 1
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00000;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h80000000;
+            assign data_operandB = 32'h80000000;
+
+            @(negedge clock);
+            if(data_result !== 32'h00000000) begin
+                $display("**Error in ADD (test *1); expected: %h, actual: %h", 32'h00000000, data_result);
+                errors = errors + 1;
+            end
+				
+				// 2
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00000;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'hF000000F;
+            assign data_operandB = 32'hF000000F;
+
+            @(negedge clock);
+            if(data_result !== 32'hE000001E) begin
+                $display("**Error in ADD (test *1); expected: %h, actual: %h", 32'hE000001E, data_result);
+                errors = errors + 1;
+            end
+				
+				// 3
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00000;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'hFFFFFFFF;
+            assign data_operandB = 32'hFFFFFFFF;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFE) begin
+                $display("**Error in ADD (test *1); expected: %h, actual: %h", 32'hFFFFFFFE, data_result);
+                errors = errors + 1;
+            end
+				
+				// 4
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00000;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h11223344;
+            assign data_operandB = 32'h44332211;
+
+            @(negedge clock);
+            if(data_result !== 32'h55555555) begin
+                $display("**Error in ADD (test *1); expected: %h, actual: %h", 32'h55555555, data_result);
+                errors = errors + 1;
+            end
+				
+				// 5
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00000;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'hab000008;
+            assign data_operandB = 32'hfd000008;
+
+            @(negedge clock);
+            if(data_result !== 32'ha8000010) begin
+                $display("**Error in ADD (test *1); expected: %h, actual: %h", 32'ha8000010, data_result);
+                errors = errors + 1;
+            end
         end
     endtask
 
@@ -193,6 +263,76 @@ module alu_tb();
             @(negedge clock);
             if(data_result !== 32'h00000000) begin
                 $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h00000000, data_result);
+                errors = errors + 1;
+            end
+				
+				//1
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'hffffffff;
+            assign data_operandB = 32'hffffffff;
+
+            @(negedge clock);
+            if(data_result !== 32'h00000000) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h00000000, data_result);
+                errors = errors + 1;
+            end
+				
+				//2
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'hffffffff;
+            assign data_operandB = 32'h00000001;
+
+            @(negedge clock);
+            if(data_result !== 32'hfffffffe) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'hfffffffe, data_result);
+                errors = errors + 1;
+            end
+				
+				//3
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h00000001;
+            assign data_operandB = 32'hffffffff;
+
+            @(negedge clock);
+            if(data_result !== 32'h00000002) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h00000002, data_result);
+                errors = errors + 1;
+            end
+				
+				//4
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h112233aa;
+            assign data_operandB = 32'haa223311;
+
+            @(negedge clock);
+            if(data_result !== 32'h67000099) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h67000099, data_result);
+                errors = errors + 1;
+            end
+				
+				//5
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h0000000f;
+            assign data_operandB = 32'hf0000000;
+
+            @(negedge clock);
+            if(data_result !== 32'h1000000f) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h1000000f, data_result);
                 errors = errors + 1;
             end
         end
