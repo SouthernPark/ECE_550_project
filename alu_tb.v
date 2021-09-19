@@ -37,8 +37,8 @@ module alu_tb();
         checkSLL();
         checkSRA();
 
-        checkNE();
-        checkLT();
+        checkNE();	//test A not equal B when subtraction
+        checkLT();	//test A is less than B when subtraction
         checkOverflow();
 
         if(errors == 0) begin
