@@ -37,8 +37,8 @@ module alu_tb();
         checkSLL();
         checkSRA();
 
-        checkNE();	//test A not equal B when subtraction
-        checkLT();	//test A is less than B when subtraction
+        checkNE();
+        checkLT();
         checkOverflow();
 
         if(errors == 0) begin
@@ -157,7 +157,6 @@ module alu_tb();
 
             assign data_operandA = 32'h00000000;
             assign data_operandB = 32'h00000000;
-				assign data_expected = 32'h00000000;
 
             @(negedge clock);
             if(data_result !== 32'h00000000) begin
@@ -454,6 +453,29 @@ module alu_tb();
                 $display("**Error in isLessThan (test 24); expected: %b, actual: %b", 1'b1, isLessThan);
                 errors = errors + 1;
             end
+				
+				@(negedge clock);
+            assign data_operandA = 32'hF0000000;
+            assign data_operandB = 32'h0FFFFFFF;
+
+            @(negedge clock);
+            if(isLessThan !== 1'b1) begin
+                $display("**Error in isLessThan (test 23); expected: %b, actual: %b", 1'b0, isLessThan);
+                errors = errors + 1;
+            end
+				
+				/* failed test case*/
+				@(negedge clock);
+            assign data_operandA = 32'h7FFFFFFF;
+            assign data_operandB = 32'h80000000;
+
+            @(negedge clock);
+            if(isLessThan !== 1'b0) begin
+                $display("**Error in isLessThan (test 23); expected: %b, actual: %b", 1'b0, isLessThan);
+                errors = errors + 1;
+            end
+				
+				
         end
     endtask
 
