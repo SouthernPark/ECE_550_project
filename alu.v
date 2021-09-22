@@ -24,11 +24,8 @@ module alu(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	csa_32 sum_sub(data_operandA, which_B, ctrl_ALUopcode[0], sum_or_sub, overflow);
 	
 	//TODO: check the result of sum or subtract is equal or not
-	//firstly we need to check if the result is 0 or not, we can use or gate
-	wire resNotEqual;
-	or or_equal1(resNotEqual, sum_or_sub);
-	//A-B is not equal either the res is not equal to 0, or there is overflow
-	or or_equal2(isNotEqual, resNotEqual, overflow);
+	//A and B and not equal when doing subtraction if and only if the result is not zero
+	or not_equal(isNotEqual, sum_or_sub);
 	
 	//TODO: check whether A is less than B
 	//A-B < 0 if there is overflow or most sig digit is 1
