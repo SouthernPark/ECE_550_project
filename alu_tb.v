@@ -99,6 +99,16 @@ module alu_tb();
                 $display("**Error in OR (test 4); expected: %h, actual: %h", 32'hFFFFFFFF, data_result);
                 errors = errors + 1;
             end
+				
+				@(negedge clock);
+            assign data_operandA = 32'hEF0F0FF2;
+            assign data_operandB = 32'h1FFF0FFD;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFF0FFF) begin
+                $display("**Error in OR (test 4); expected: %h, actual: %h", 32'hFFFF0FFF, data_result);
+                errors = errors + 1;
+            end
         end
     endtask
 
@@ -398,6 +408,32 @@ module alu_tb();
                 $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'h00000000, data_result);
                 errors = errors + 1;
             end
+				
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00101;
+            assign data_operandB = 32'h00000000;
+
+            assign data_operandA = 32'h10000001;
+            assign ctrl_shiftamt = 5'b10000;
+
+            @(negedge clock);
+            if(data_result !== 32'h00001000) begin
+                $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'h00001000, data_result);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00101;
+            assign data_operandB = 32'h00000000;
+
+            assign data_operandA = 32'hF0000001;
+            assign ctrl_shiftamt = 5'b10000;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFF000) begin
+                $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'hFFFFF000, data_result);
+                errors = errors + 1;
+            end
         end
     endtask
 
@@ -413,6 +449,32 @@ module alu_tb();
             @(negedge clock);
             if(isNotEqual !== 1'b0) begin
                 $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b0, isNotEqual);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h00000001;
+            assign data_operandB = 32'h10000001;
+
+            @(negedge clock);
+            if(isNotEqual !== 1'b1) begin
+                $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b1, isNotEqual);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+            assign ctrl_ALUopcode = 5'b00001;
+            assign ctrl_shiftamt = 5'b00000;
+
+            assign data_operandA = 32'h00010000;
+            assign data_operandB = 32'h10000000;
+
+            @(negedge clock);
+            if(isNotEqual !== 1'b1) begin
+                $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b1, isNotEqual);
                 errors = errors + 1;
             end
         end

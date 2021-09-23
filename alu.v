@@ -25,7 +25,7 @@ module alu(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	
 	//TODO: check the result of sum or subtract is equal or not
 	//A and B and not equal when doing subtraction if and only if the result is not zero
-	or not_equal(isNotEqual, sum_or_sub);
+	self_or_32 not_equal(sum_or_sub, isNotEqual);
 	
 	//TODO: check whether A is less than B
 	//if there is an overflow:
