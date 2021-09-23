@@ -40,11 +40,14 @@ Bit at i position of forth_level_result will be connnected to the i-16 position.
 For positions that does not have i-8 position (the 0,1...,15 pos) will be connected to 0 directly.  
 This level of results will be stored in the output.  
 
+## SRA
+SRA was developed in a very similar way with SLL.  
 
-For one input, we need to calculate its ADD, SUB, ADD, OR, SLL, SRA result.  
+## notEqual  
+After compute the subtraction, we will get the result. By puting the 32-bits result into or gate, I can check whether the result is 0 or not.  
+Then I can check whether the two operand are equal or not.  
 
-Finally, I am gonna to use a 3 bits mux to select the result we need
-
+## isLessThan
 
 
  
