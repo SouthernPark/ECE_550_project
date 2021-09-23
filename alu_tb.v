@@ -445,6 +445,7 @@ module alu_tb();
 
             // Less than with overflow
             @(negedge clock);
+				//negative - positive
             assign data_operandA = 32'h80000001;
             assign data_operandB = 32'h7FFFFFFF;
 
@@ -465,6 +466,7 @@ module alu_tb();
             end
 				
 				/* failed test case*/
+				//positive - negative
 				@(negedge clock);
             assign data_operandA = 32'h7FFFFFFF;
             assign data_operandB = 32'h80000000;

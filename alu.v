@@ -28,8 +28,15 @@ module alu(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	or not_equal(isNotEqual, sum_or_sub);
 	
 	//TODO: check whether A is less than B
-	//A-B < 0 if there is overflow or most sig digit is 1
-	or small_(isLessThan, overflow, sum_or_sub[31]);
+	//if there is an overflow:
+	//overflow can only happen is positive - negative or negative - positive
+	//therefore when overflow is 1, we will set isLessthan as operandA[31]
+	
+	//if there is no overflow, then the subtraction res is correct,
+	//therefore we just beed to check whether the res is negative which is sum_or_sub[31]
+	
+	//we can use a mux to do this thing
+	assign isLessThan = overflow ? data_operandA[31]:sum_or_sub[31];
 	
 	/*and operation*/
 	wire [31:0] and_res;
