@@ -44,10 +44,17 @@ This level of results will be stored in the output.
 SRA was developed in a very similar way with SLL.  
 
 ## notEqual  
-After compute the subtraction, we will get the result. By puting the 32-bits result into or gate, I can check whether the result is 0 or not.  
+After compute the subtraction, we will get the result. By puting the 32-bits result into or gate, 
+I can check whether the result is 0 or not.  
 Then I can check whether the two operand are equal or not.  
 
 ## isLessThan
+>Firstly, I will check if there is overflow. Overflow can only occurs when negative-positive or positive-negative. 
+Then I came up with useing the most significant postion of operandA to classify whether A is smaller than B.  
 
+>Secondly, if there is no overflow, then the subtraction result will be correct, then I can use the most significant
+position of subtraction result to classify whether A is smaller than B.  
+
+Mux will be used to select between overflow = 1 and overflow = 0.  
 
  
