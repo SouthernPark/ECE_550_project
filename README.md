@@ -18,23 +18,27 @@ In SLL module, I use five level of muxes. Each level will have 32 muxes.
 >First level mux --> move operandA 0 or 1 bits left,  specified by the least significant digit ctrl_shiftamt[0].  
 Bit at i position of operandA will be connnected to the i-1 position.  
 For positions that does not have i-1 position (the 0 position) will be connected to 0 directly.  
-This will produce a first level result stored in wire[31:0].  
+This will produce a first level result.  
 
 >Second level mux --> move the operandA move 0 or 2 bits, specified by the least significant digit ctrl_shiftamt[1].  
-Bit at i position of  will be connnected to the i-2 position.  
-For positions that does not have i-2 position (the 0,1 pos) will be connected to 0 directly.
+Bit at i position of first_level_result will be connnected to the i-2 position.  
+For positions that does not have i-2 position (the 0,1 pos) will be connected to 0 directly.  
+This will produce a second level result.  
 		
 >Third level -> move 0 or 4 bits, specified by the least significant digit ctrl_shiftamt[2].  
-Bit at i position of operandA will be connnected to the i-4 position.  
-For positions that does not have i-4 position (the 0,1,2,3 pos) will be connected to 0 directly.
+Bit at i position of second_level_result will be connnected to the i-4 position.  
+For positions that does not have i-4 position (the 0,1,2,3 pos) will be connected to 0 directly.  
+This will produce a third level result.  
 		
 >Forth level -> move 0 or 8 bits, specified by the least significant digit ctrl_shiftamt[3].  
-Bit at i position of operandA will be connnected to the i-8 position.  
-For positions that does not have i-8 position (the 0,1...,7 pos) will be connected to 0 directly.
+Bit at i position of third_level_result will be connnected to the i-8 position.  
+For positions that does not have i-8 position (the 0,1...,7 pos) will be connected to 0 directly.  
+This will produce a forth level result.  
 		
 >Fifth level -> move 0 or 16 bits, specified by the least significant digit ctrl_shiftamt[4].  
-Bit at i position of operandA will be connnected to the i-16 position.  
-For positions that does not have i-8 position (the 0,1...,15 pos) will be connected to 0 directly.
+Bit at i position of forth_level_result will be connnected to the i-16 position.  
+For positions that does not have i-8 position (the 0,1...,15 pos) will be connected to 0 directly.  
+This level of results will be stored in the output.  
 
 
 For one input, we need to calculate its ADD, SUB, ADD, OR, SLL, SRA result.  
